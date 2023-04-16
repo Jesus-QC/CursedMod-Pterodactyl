@@ -1,1 +1,1 @@
-echo Test
+cd /home/container/server && ${STARTUP};
