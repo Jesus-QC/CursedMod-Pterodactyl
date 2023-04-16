@@ -9,17 +9,6 @@ MAINTAINER Jesus-QC, <support@jesusqc.es>
 
 USER root
 
-RUN echo Hello
-
-RUN adduser --disabled-password --home /home/container container
-RUN usermod -a -G container container
-RUN chown -R container:container /home/container
-
-USER container
-ENV  USER=container HOME=/home/container
-
-WORKDIR /home/container
-
 RUN echo steamcmd steam/question select "I AGREE" | debconf-set-selections
 RUN echo steamcmd steam/license note '' | debconf-set-selections
 
@@ -33,9 +22,16 @@ RUN locale-gen en_US.UTF-8
 ENV LANG 'en_US.UTF-8'
 ENV LANGUAGE 'en_US:en'
 
-RUN ln -s /usr/games/steamcmd /usr/bin/steamcmd
+RUN echo Hello
 
-RUN steamcmd +quit
+RUN adduser --disabled-password --home /home/container container
+RUN usermod -a -G container container
+RUN chown -R container:container /home/container
+
+USER container
+ENV  USER=container HOME=/home/container
+
+WORKDIR /home/container
 
 COPY ./entrypoint.sh /entrypoint.sh
 CMD ["/bin/bash", "/entrypoint.sh"]
