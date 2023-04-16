@@ -1,9 +1,9 @@
 # ----------------------------------
 # CursedMod Runner DockerFile
-# Environment: Ubuntu
+# Environment: SteamCmd
 # Minimum Panel Version: 0.6.0
 # ----------------------------------
-FROM ubuntu:22.04
+FROM steamcmd/steamcmd:ubuntu-22
 
 MAINTAINER Jesus-QC, <support@jesusqc.es>
 
@@ -18,9 +18,8 @@ ENV  USER=container HOME=/home/container
 
 WORKDIR /home/container
 
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-RUN echo steam steam/question select "I AGREE" | debconf-set-selections \
- && echo steam steam/license note '' | debconf-set-selections
+RUN echo steamcmd steam/question select "I AGREE" | debconf-set-selections
+RUN echo steamcmd steam/license note '' | debconf-set-selections
 
 ARG DEBIAN_FRONTEND=noninteractive
 RUN dpkg --add-architecture i386 \
